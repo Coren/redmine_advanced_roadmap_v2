@@ -1,0 +1,45 @@
+<%- defaults = Redmine::Plugin::registered_plugins[:advanced_roadmap].settings[:default] -%>
+
+<%- version_custom_fields = CustomField.find(:all, :conditions => "type = 'VersionCustomField'")
+    version_custom_field_options = options_for_select([["", 0]] + version_custom_fields.collect{|c| [c.name, c.id]},
+                                                      (@settings["parallel_effort_custom_field"] || defaults["parallel_effort_custom_field"]).to_i) -%>
+
+<p>
+  <label><%= l(:label_setting_parallel_effort_custom_field) %>:</label>
+  <%= select_tag("settings[parallel_effort_custom_field]", version_custom_field_options) %>
+</p>
+
+<p>
+  <label><%= l(:label_setting_solved_issues_to_estimate) %>:</label>
+  <%= text_field_tag("settings[solved_issues_to_estimate]", @settings["solved_issues_to_estimate"] || defaults["solved_issues_to_estimate"]) %>
+</p>
+
+<p>
+  <label><%= l(:label_setting_ratio_good) %>:</label>
+  <%= text_field_tag("settings[ratio_good]", @settings["ratio_good"] || defaults["ratio_good"]) %>
+</p>
+
+<p>
+  <label><%= l(:label_setting_color_good) %>:</label>
+  <%= text_field_tag("settings[color_good]", @settings["color_good"] || defaults["color_good"]) %>
+</p>
+
+<p>
+  <label><%= l(:label_setting_ratio_bad) %>:</label>
+  <%= text_field_tag("settings[ratio_bad]", @settings["ratio_bad"] || defaults["ratio_bad"]) %>
+</p>
+
+<p>
+  <label><%= l(:label_setting_color_bad) %>:</label>
+  <%= text_field_tag("settings[color_bad]", @settings["color_bad"] || defaults["color_bad"]) %>
+</p>
+
+<p>
+  <label><%= l(:label_setting_ratio_very_bad) %>:</label>
+  <%= text_field_tag("settings[ratio_very_bad]", @settings["ratio_very_bad"] || defaults["ratio_very_bad"]) %>
+</p>
+
+<p>
+  <label><%= l(:label_setting_color_very_bad) %>:</label>
+  <%= text_field_tag("settings[color_very_bad]", @settings["color_very_bad"] || defaults["color_very_bad"]) %>
+</p>

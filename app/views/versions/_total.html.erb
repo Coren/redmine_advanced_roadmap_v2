@@ -1,0 +1,62 @@
+<%= tag "a", :name => l(:label_total) %>
+<h3 class="icon22 icon22-package"><%= l(:label_total) %></h3>
+<%= progress_bar([totals[:closed_pourcent], totals[:completed_pourcent]], :width => '40em', :legend => ('%0.0f%' % totals[:completed_pourcent])) %>
+<fieldset><legend><%= l(:label_time_tracking) %></legend>
+  <table width="100%">
+    <tr>
+      <td valign="top">
+        <table>
+        <%- if User.current.allowed_to?(:view_issue_estimated_hours, project) -%>
+          <tr>
+            <td width="300px" align="right"><%= l(:field_estimated_hours) %></td>
+            <td width="340px" class="total-hours"><%= l_hours(totals[:estimated_hours]) %></td>
+          </tr>
+        <%- end -%>
+        <%- if User.current.allowed_to?(:view_time_entries, project) -%>
+          <tr>
+            <td width="300px" align="right"><%= l(:label_spent_time) %></td>
+            <td width="340px" class="total-hours"><%= l_hours(totals[:spent_hours]) %></td>
+          </tr>
+        <%- end -%>
+        <tr>
+          <td width="300px" align="right"><%= l(:field_done_ratio) %></td>
+          <td width="340px" class="total-hours"><big><%= "%.0f" % totals[:completed_pourcent] %></big>%</td>
+        </tr>
+        <%- if User.current.allowed_to?(:view_time_entries, project) and
+               User.current.allowed_to?(:view_issue_estimated_hours, project) -%>
+          <tr>
+            <td width="300px" align="right"><%= l(:label_roadmap_due_in, "") %></td>
+              <%- due, tmp = '', totals[:rest_hours] 
+                  due << l_weeks(tmp.div 40) << ' ' and tmp %= 40.0 if (tmp / 40.0) > 1.0
+                  due << l_days(tmp.div 8) << ' ' and tmp %= 8.0 if (tmp / 8.0) > 1.0
+                  due << l_hours(tmp) if tmp > 0.0 %>
+            <td width="340px" class="total-hours"><%= due %></td>
+          </tr>
+          <%- if totals[:rest_hours] != totals[:speed_rest_hours] -%>
+            <tr>
+              <td width="300px" align="right"><%= l(:label_roadmap_due_in, "") %> (<%= l(:label_estimated_speed) %>)</td>
+              <td width="340px" class="total-hours"><%= "#{l_hours(totals[:speed_rest_hours])} / #{l_days(totals[:speed_rest_hours] / 8.0)} / #{l_weeks(totals[:speed_rest_hours] / 40.0)}" %></td>
+            </tr>
+          <%- end -%>
+          <%- if !(custom_field = CustomField.find_by_id(Setting.plugin_advanced_roadmap["parallel_effort_custom_field"].to_i)).nil? and
+                 custom_field.field_format == "float" and totals[:parallel_rest_hours] != totals[:rest_hours] -%>
+            <tr>
+              <td width="300px" align="right"><%= l(:label_roadmap_due_in, "") %> (<%= custom_field.name %>)</td>
+              <td width="340px" class="total-hours"><%= "#{l_hours(totals[:parallel_rest_hours])} / #{l_days(totals[:parallel_rest_hours] / 8.0)} / #{l_weeks(totals[:parallel_rest_hours] / 40.0)}" %></td>
+            </tr>
+            <%- if totals[:parallel_rest_hours] != totals[:parallel_speed_rest_hours] -%>
+              <tr>
+                <td width="300px" align="right"><%= l(:label_roadmap_due_in, "") %> (<%= custom_field.name %> + <%= l(:label_estimated_speed) %>)</td>
+                <td width="340px" class="total-hours"><%= "#{l_hours(totals[:parallel_speed_rest_hours])} / #{l_days(totals[:parallel_speed_rest_hours] / 8.0)} / #{l_weeks(totals[:parallel_speed_rest_hours] / 40.0)}" %></td>
+              </tr>
+            <%- end -%>
+          <%- end -%>
+        <%- end -%>
+        </table>
+      </td>
+      <td align="right">
+        <%= total_graph_tag(versions, totals) %>
+      </td>
+    </tr>
+  </table>
+</fieldset>

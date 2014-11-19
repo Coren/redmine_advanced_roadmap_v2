@@ -1,0 +1,61 @@
+<div class="contextual">
+  <%= link_to_if_authorized l(:button_edit), {:controller => 'versions', :action => 'edit', :id => @version}, :class => 'icon icon-edit' %>
+  <%= link_to_if_authorized(l(:button_edit_associated_wikipage, :page_title => @version.wiki_page_title), {:controller => 'wiki', :action => 'edit', :id => @version.project, :page => Wiki.titleize(@version.wiki_page_title)}, :class => 'icon icon-edit') unless @version.wiki_page_title.blank? || @version.project.wiki.nil? %>
+  <%= call_hook(:view_versions_show_contextual, { :version => @version, :project => @project }) %>
+</div>
+
+<h2><%= h(@version.name) %></h2>
+
+<div id="version-summary">
+  <fieldset><legend><%= l(:label_time_tracking) %></legend>
+    <table>
+      <%- if User.current.allowed_to?(:view_time_entries, @project) and
+             User.current.allowed_to?(:view_issue_estimated_hours, @project) -%>
+        <%- if !@version.estimated_speed.nil? -%>
+          <tr>
+              <td width="130px" align="right">% <%= l(:label_estimated_speed) %></td>
+              <td width="240px" class="total-hours"><font color="<%= color_by_ratio(@version.estimated_speed) %>"><%= ("%.0f" % (100.0 / @version.estimated_speed)) %>%</font></td>
+          </tr>
+        <%- end -%>
+        <%- if @version.rest_hours > 0.0 %>
+          <tr>
+            <td width="130px" align="right"><%= l(:label_roadmap_due_in, "") %></td>
+            <td width="240px" class="total-hours"><%= "#{l_hours(@version.rest_hours)} / #{l_days(@version.rest_hours / 8.0)} / #{l_weeks(@version.rest_hours / 40.0)}" %></td>
+          </tr>
+          <%- if @version.rest_hours != @version.speed_rest_hours -%>
+            <tr>
+              <td width="130px" align="right"><%= l(:label_roadmap_due_in, "") %> (<%= l(:label_estimated_speed) %>)</td>
+              <td width="240px" class="total-hours"><%= "#{l_hours(@version.speed_rest_hours)} / #{l_days(@version.speed_rest_hours / 8.0)} / #{l_weeks(@version.speed_rest_hours / 40.0)}" %></td>
+            </tr>
+          <%- end -%>
+          <%- if !(custom_field = CustomField.find_by_id(Setting.plugin_advanced_roadmap["parallel_effort_custom_field"].to_i)).nil? and
+                 custom_field.field_format == "float" and @version.parallel_rest_hours != @version.rest_hours -%>
+            <tr>
+              <td width="130px" align="right"><%= l(:label_roadmap_due_in, "") %> (<%= custom_field.name %>)</td>
+              <td width="240px" class="total-hours"><%= "#{l_hours(@version.parallel_rest_hours)} / #{l_days(@version.parallel_rest_hours / 8.0)} / #{l_weeks(@version.parallel_rest_hours / 40.0)}" %></td>
+            </tr>
+            <%- if @version.parallel_speed_rest_hours != @version.parallel_rest_hours -%>
+              <tr>
+                <td width="130px" align="right"><%= l(:label_roadmap_due_in, "") %> (<%= custom_field.name %> + <%= l(:label_estimated_speed) %>)</td>
+                <td width="240px" class="total-hours"><%= "#{l_hours(@version.parallel_speed_rest_hours)} / #{l_days(@version.parallel_speed_rest_hours / 8.0)} / #{l_weeks(@version.parallel_speed_rest_hours / 40.0)}" %></td>
+              </tr>
+            <%- end -%>
+          <%- end -%>
+        <%- end -%>
+      <%- end -%>
+    </table>
+  </fieldset>
+  <div id="status_by">
+    <%= render_issue_status_by(@version, params[:status_by]) if @version.fixed_issues.count > 0 %>
+  </div>
+</div>
+
+<div id="roadmap">
+  <%= render :partial => 'versions/info', :locals => {:version => @version, :issues => @issues} %>
+</div>
+
+<%= call_hook :view_versions_show_bottom, :version => @version %>
+
+<% html_title @version.name %>
+
+<%= context_menu issues_context_menu_path %>

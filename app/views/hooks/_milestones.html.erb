@@ -1,0 +1,6 @@
+<%- if !@project.nil? -%>
+<h3><%= l(:label_milestone_plural) %></h3>
+<%- @project.milestones.sort.each do |milestone| -%>
+<%= link_to_milestone(milestone) %><br />
+<%- end -%>
+<%- end -%>

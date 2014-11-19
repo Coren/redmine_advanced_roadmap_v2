@@ -1,0 +1,40 @@
+<script language="javascript">
+  function AddMilestoneToDay(milestoneName, milestoneUrl, day)
+  {
+    var cellElement = null;
+    var dayOneFound = false;
+    var elements = document.getElementsByTagName("*");
+    for (var i = 0; (cellElement == null) && (i < elements.length); i++)
+    {
+      if (elements[i].className == "day-num")
+      {
+        var oneDay = parseInt(elements[i].childNodes[0].nodeValue);
+        if ((!dayOneFound) && (oneDay == 1))
+        {
+          dayOneFound = true;
+        }
+        if (dayOneFound && (oneDay == day))
+        {
+          cellElement = elements[i].parentNode;
+        }
+      }
+    }
+    if (cellElement != null)
+    {
+      var link = document.createElement("a");
+      link.innerHTML = milestoneName;
+      link.href = milestoneUrl;
+      var milestone = document.createElement("span");
+      milestone.className = "icon icon-milestone calendar-milestone";
+      milestone.appendChild(link);
+      cellElement.appendChild(milestone);
+    }
+  }
+  <%- if ((!(milestones.nil?)) and (milestones.any?)) -%>
+    <%- milestones.each do |milestone| -%>
+      AddMilestoneToDay("<%= milestone[:name] %>",
+                        "<%= milestone[:url] %>",
+                        <%= milestone[:day] %>);
+    <%- end -%>
+  <%- end -%>
+</script>

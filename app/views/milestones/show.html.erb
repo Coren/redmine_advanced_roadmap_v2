@@ -1,0 +1,42 @@
+<div class="contextual">
+<%= link_to_if_authorized l(:button_edit), {:controller => :milestones, :action => :edit, :id => @milestone.id}, :class => 'icon icon-edit' %>
+</div>
+
+<h2><%= h(@milestone.name) %></h2>
+
+<% if @milestone.completed? %>
+  <p><%= format_date(@milestone.effective_date) %></p>
+<% elsif @milestone.effective_date %>
+  <p><strong><%= due_date_distance_in_words(@milestone.effective_date) %></strong> (<%= format_date(@milestone.effective_date) %>)</p>
+<% end %>
+
+<p><%= h(@milestone.description) %></p>
+
+<% if @milestone.versions.empty? %>
+<p class="nodata"><%= l(:label_no_data) %></p>
+<% else %>
+<div id="roadmap">
+<%= render(:partial => "versions/total", :locals => {:project => @project, :totals => @totals, :versions => @milestone.versions}) %>
+<% @milestone.versions.each do |version| %>
+    <h3 class="version"><%= tag 'a', :name => version.name %><%= link_to_version version %></h3>
+    <%= render :partial => 'versions/info', :locals => {:version => version, :issues => version.sorted_fixed_issues, :totals => @totals} %>
+    <%= call_hook :view_projects_roadmap_version_bottom, :version => version %>
+<% end %>
+</div>
+<% end %>
+
+<% content_for :sidebar do %>
+<h3><%= l(:label_milestone_plural) %></h3>
+<% @milestone.project.milestones.sort.each do |milestone| %>
+<%= link_to milestone.name, :controller => :milestones, :action => :show, :id => milestone.id %><br />
+<% end %>
+<h3><%= l(:label_version_plural) %></h3>
+<%= link_to(l(:label_total), "##{l(:label_total)}") %><br />
+<% @milestone.versions.each do |version| %>
+<%= link_to format_version_name(version), "##{version.name}" %><br />
+<% end %>
+<% end %>
+
+<% html_title(l(:label_roadmap)) %>
+
+<%= context_menu issues_context_menu_path %>
