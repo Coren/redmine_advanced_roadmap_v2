@@ -81,7 +81,7 @@ module AdvancedRoadmap
                 end
               end
             end
-            if solved_issues < Setting.plugin_advanced_roadmap["solved_issues_to_estimate"].to_i or total_solved_estimated == 0.0
+            if solved_issues < Setting.plugin_advanced_roadmap_v2["solved_issues_to_estimate"].to_i or total_solved_estimated == 0.0
               @progress_factor = nil
             else
               @progress_factor = total_solved_spent / total_solved_estimated
@@ -114,7 +114,7 @@ module AdvancedRoadmap
   
         def parallel_factor
           factor = 1.0
-          if !(custom_field = CustomField.find_by_id(Setting.plugin_advanced_roadmap["parallel_effort_custom_field"].to_i)).nil? and
+          if !(custom_field = CustomField.find_by_id(Setting.plugin_advanced_roadmap_v2["parallel_effort_custom_field"].to_i)).nil? and
              custom_field.field_format == "float"
             if !(custom_value = CustomValue.find(:first, :conditions => {:customized_type => "Version", :customized_id => id, :custom_field_id => custom_field.id})).nil?
               factor = custom_value.value.to_f

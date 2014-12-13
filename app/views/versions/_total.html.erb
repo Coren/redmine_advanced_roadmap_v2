@@ -38,7 +38,7 @@
               <td width="340px" class="total-hours"><%= "#{l_hours(totals[:speed_rest_hours])} / #{l_days(totals[:speed_rest_hours] / 8.0)} / #{l_weeks(totals[:speed_rest_hours] / 40.0)}" %></td>
             </tr>
           <%- end -%>
-          <%- if !(custom_field = CustomField.find_by_id(Setting.plugin_advanced_roadmap["parallel_effort_custom_field"].to_i)).nil? and
+          <%- if !(custom_field = CustomField.find_by_id(Setting.plugin_advanced_roadmap_v2["parallel_effort_custom_field"].to_i)).nil? and
                  custom_field.field_format == "float" and totals[:parallel_rest_hours] != totals[:rest_hours] -%>
             <tr>
               <td width="300px" align="right"><%= l(:label_roadmap_due_in, "") %> (<%= custom_field.name %>)</td>
@@ -55,7 +55,7 @@
         </table>
       </td>
       <td align="right">
-        <%= total_graph_tag(versions, totals) %>
+        <%= total_graph_tag(versions, totals) if Object.const_defined?(:Magick) %>
       </td>
     </tr>
   </table>
