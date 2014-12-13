@@ -8,6 +8,7 @@ class MilestonesController < ApplicationController
 
   helper :custom_fields
   helper :projects
+  helper :versions
   include CustomFieldsHelper
   include ProjectsHelper
 
