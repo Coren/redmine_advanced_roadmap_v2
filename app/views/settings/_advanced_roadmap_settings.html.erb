@@ -1,4 +1,4 @@
-<%- defaults = Redmine::Plugin::registered_plugins[:advanced_roadmap].settings[:default] -%>
+<%- defaults = Redmine::Plugin::registered_plugins[:advanced_roadmap_v2].settings[:default] -%>
 
 <%- version_custom_fields = CustomField.find(:all, :conditions => "type = 'VersionCustomField'")
     version_custom_field_options = options_for_select([["", 0]] + version_custom_fields.collect{|c| [c.name, c.id]},
