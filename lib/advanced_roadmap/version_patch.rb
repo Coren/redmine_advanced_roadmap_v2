@@ -8,17 +8,17 @@ module AdvancedRoadmap
         has_many :milestone_versions, :dependent => :destroy
         has_many :milestones, :through => :milestone_versions
   
-        def completed_pourcent_with_advanced_info
+        def completed_percent_with_advanced_info
           calculate_advance_info unless @total_ratio
           @total_ratio
         end
-        alias_method_chain :completed_pourcent, :advanced_info
+        alias_method_chain :completed_percent, :advanced_info
   
-        def closed_pourcent_with_advanced_info
+        def closed_percent_with_advanced_info
           calculate_advance_info unless @total_finished_ratio
           @total_finished_ratio
         end
-        alias_method_chain :closed_pourcent, :advanced_info
+        alias_method_chain :closed_percent, :advanced_info
   
         def rest_hours
           calculate_advance_info unless @total_pending
@@ -163,8 +163,8 @@ module AdvancedRoadmap
           totals[:speed_rest_hours] = 0.0
           totals[:parallel_rest_hours] = 0.0
           totals[:parallel_speed_rest_hours] = 0.0
-          totals[:completed_pourcent] = 0.0
-          totals[:closed_pourcent] = 0.0
+          totals[:completed_percent] = 0.0
+          totals[:closed_percent] = 0.0
           versions.each do |version|
             totals[:estimated_hours] += version.estimated_hours
             totals[:spent_hours] += version.spent_hours
@@ -172,13 +172,13 @@ module AdvancedRoadmap
             totals[:speed_rest_hours] += version.speed_rest_hours
             totals[:parallel_rest_hours] += version.parallel_rest_hours
             totals[:parallel_speed_rest_hours] += version.parallel_speed_rest_hours
-            totals[:completed_pourcent] += version.spent_hours
-            totals[:closed_pourcent] += version.closed_spent_hours
+            totals[:completed_percent] += version.spent_hours
+            totals[:closed_percent] += version.closed_spent_hours
           end
           totals[:total] = totals[:spent_hours] + totals[:rest_hours]
           if totals[:total] > 0.0
-            totals[:completed_pourcent] = (totals[:completed_pourcent] * 100.0) / totals[:total]
-            totals[:closed_pourcent] = (totals[:closed_pourcent] * 100.0) / totals[:total]
+            totals[:completed_percent] = (totals[:completed_percent] * 100.0) / totals[:total]
+            totals[:closed_percent] = (totals[:closed_percent] * 100.0) / totals[:total]
           end
           totals
         end

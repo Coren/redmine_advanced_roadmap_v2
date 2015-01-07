@@ -170,7 +170,7 @@
     <%- if User.current.allowed_to?(:view_time_entries, @project) -%>
       <th align="center"><%= ("%.2f" % version_spent_hours) %></th>
     <%- end -%>
-    <th align="center"><%= ("%.0f" % version.completed_pourcent) %>%</th>
+    <th align="center"><%= ("%.0f" % version.completed_percent) %>%</th>
     <%- if User.current.allowed_to?(:view_time_entries, @project) and
            User.current.allowed_to?(:view_issue_estimated_hours, @project) -%>
       <th align="center"><%= ("%.2f" % version_rest_hours) %></th>

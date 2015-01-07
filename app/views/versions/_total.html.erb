@@ -1,6 +1,6 @@
 <%= tag "a", :name => l(:label_total) %>
 <h3 class="icon22 icon22-package"><%= l(:label_total) %></h3>
-<%= progress_bar([totals[:closed_pourcent], totals[:completed_pourcent]], :width => '40em', :legend => ('%0.0f%' % totals[:completed_pourcent])) %>
+<%= progress_bar([totals[:closed_percent], totals[:completed_percent]], :width => '40em', :legend => ('%0.0f%' % totals[:completed_percent])) %>
 <fieldset><legend><%= l(:label_time_tracking) %></legend>
   <table width="100%">
     <tr>
@@ -20,7 +20,7 @@
         <%- end -%>
         <tr>
           <td width="300px" align="right"><%= l(:field_done_ratio) %></td>
-          <td width="340px" class="total-hours"><big><%= "%.0f" % totals[:completed_pourcent] %></big>%</td>
+          <td width="340px" class="total-hours"><big><%= "%.0f" % totals[:completed_percent] %></big>%</td>
         </tr>
         <%- if User.current.allowed_to?(:view_time_entries, project) and
                User.current.allowed_to?(:view_issue_estimated_hours, project) -%>
