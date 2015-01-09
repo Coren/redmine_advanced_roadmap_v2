@@ -5,12 +5,12 @@
   <p><%= f.text_field :description, :size => 60 %></p>
   <p><%= f.text_field :effective_date, :size => 10 %><%= calendar_for('milestone_effective_date') %></p>
   <p>
-    <select id="project_selector">
+    <select id="project_selector" onchange="project_changed()">
       <% @projects.each do |project| %>
         <option<%= (project == @project) ? " selected" : "" %> id="<%= project.id %>"><%= h(project.name) %></option>
       <% end %>
     </select>
-    <% javascript_tag :defer => "defer" do %>
+    <script>
       function project_changed()
       {
         object = window.document.getElementById("project_selector");
@@ -36,14 +36,10 @@
           }
         }
       }
-      jQuery(function($)
-      {
-        $(\"#project_selector\").change(project_change);
-      })
-    <% end %>
+      </script>
   </p>
   <% @projects.each do |project| %>
-    <div id="project_<%= project.id %>_versions"<%= (@project == project) ? "" : "style=\"display: none; visibility: hidden;\"" %>>
+    <div id="project_<%= project.id %>_versions" style="<%= (@project == project) ? '' : 'display: none; visibility: hidden;' %>">
       <table class="list">
         <thead>
           <th><%= l(:field_version) %></th>
