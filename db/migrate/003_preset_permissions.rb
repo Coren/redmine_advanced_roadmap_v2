@@ -1,6 +1,7 @@
 class PresetPermissions < ActiveRecord::Migration
   def self.up
     role = Role.find(:first, :conditions => "name='Manager'")
+    return true unless role
     role.permissions << :manage_milestones
     role.permissions << :view_issue_estimated_hours
     role.save!
@@ -8,6 +9,7 @@ class PresetPermissions < ActiveRecord::Migration
 
   def self.down
     role = Role.find(:first, :conditions => "name='Manager'")
+    return true unless role
     role.permissions.delete :manage_milestones
     role.permissions.delete :view_issue_estimated_hours
     role.save!
