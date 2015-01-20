@@ -34,9 +34,9 @@ module AdvancedRoadmap
         def subject_for_milestones_label(options)
           case options[:format]
           when :html
-            subject = "<span class='icon icon-milestones'>"
-            subject << l(:label_milestone_plural)
-            subject << "</span>"
+            html_class = 'icon icon-milestones'
+            s = l(:label_milestone_plural)
+            subject = view.content_tag(:span, s, :class => html_class).html_safe
             html_subject(options, subject, :css => "milestones-label")
           when :image
             image_subject(options, l(:label_milestone_plural))
@@ -49,9 +49,9 @@ module AdvancedRoadmap
         def subject_for_milestone(milestone, options)
           case options[:format]
           when :html
-            subject = "<span class='icon icon-milestone'>"
-            subject << view.link_to_milestone(milestone)
-            subject << "</span>"
+            html_class = 'icon icon-milestone'
+            s = view.link_to_milestone(milestone).html_safe
+            subject = view.content_tag(:span, s, :class => html_class).html_safe
             html_subject(options, subject, :css => "milestone-name")
           when :image
             image_subject(options, milestone.to_s)
