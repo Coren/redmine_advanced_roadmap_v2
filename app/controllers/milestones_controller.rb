@@ -24,6 +24,8 @@ class MilestonesController < ApplicationController
     Version.sort_versions(@milestone.versions)
     @more_than_one_project = (projects.length > 1)
     @totals = Version.calculate_totals(@milestone.versions)
+    @trackers = @project.trackers.sorted.all
+    retrieve_selected_tracker_ids(@trackers, @trackers.select {|t| t.is_in_roadmap?})
   end
 
   def new
@@ -137,6 +139,14 @@ private
       :marker_color => "#AAAAAA",
       :background_colors => ["#FFFFFF", "#FFFFFF"]
     }
+  end
+
+  def retrieve_selected_tracker_ids(selectable_trackers, default_trackers=nil)
+    if ids = params[:tracker_ids]
+      @selected_tracker_ids = (ids.is_a? Array) ? ids.collect { |id| id.to_i.to_s } : ids.split('/').collect { |id| id.to_i.to_s }
+    else
+      @selected_tracker_ids = (default_trackers || selectable_trackers).collect {|t| t.id.to_s }
+    end
   end
 
 end
