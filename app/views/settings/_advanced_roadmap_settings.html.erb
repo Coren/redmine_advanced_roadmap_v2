@@ -1,36 +1,41 @@
 <%- defaults = Redmine::Plugin::registered_plugins[:advanced_roadmap_v2].settings[:default] -%>
 
 <p>
-  <label><%= l(:label_setting_solved_issues_to_estimate) %>:</label>
-  <%= text_field_tag("settings[solved_issues_to_estimate]", @settings["solved_issues_to_estimate"] || defaults["solved_issues_to_estimate"]) %>
+  <%= label_tag 'settings[show_due_time]', l(:label_setting_show_due_time) %>
+  <%= check_box_tag('settings[show_due_time]', 'true', @settings["show_due_time"]) %>
 </p>
 
 <p>
-  <label><%= l(:label_setting_ratio_good) %>:</label>
-  <%= text_field_tag("settings[ratio_good]", @settings["ratio_good"] || defaults["ratio_good"]) %>
+  <%= label_tag 'settings[solved_issues_to_estimate]', l(:label_setting_solved_issues_to_estimate) %>
+  <%= text_field_tag('settings[solved_issues_to_estimate]', @settings["solved_issues_to_estimate"] || defaults["solved_issues_to_estimate"]) %>
 </p>
 
 <p>
-  <label><%= l(:label_setting_color_good) %>:</label>
-  <%= text_field_tag("settings[color_good]", @settings["color_good"] || defaults["color_good"]) %>
+  <%= label_tag 'settings[ratio_good]', l(:label_setting_ratio_good) %>
+  <%= text_field_tag('settings[ratio_good]', @settings["ratio_good"] || defaults["ratio_good"]) %>
 </p>
 
 <p>
-  <label><%= l(:label_setting_ratio_bad) %>:</label>
-  <%= text_field_tag("settings[ratio_bad]", @settings["ratio_bad"] || defaults["ratio_bad"]) %>
+  <%= label_tag 'settings[color_good]', l(:label_setting_color_good) %>
+  <%= text_field_tag('settings[color_good]', @settings["color_good"] || defaults["color_good"]) %>
 </p>
 
 <p>
-  <label><%= l(:label_setting_color_bad) %>:</label>
-  <%= text_field_tag("settings[color_bad]", @settings["color_bad"] || defaults["color_bad"]) %>
+  <%= label_tag 'settings[ratio_bad]', l(:label_setting_ratio_bad) %>
+  <%= text_field_tag('settings[ratio_bad]', @settings["ratio_bad"] || defaults["ratio_bad"]) %>
 </p>
 
 <p>
-  <label><%= l(:label_setting_ratio_very_bad) %>:</label>
-  <%= text_field_tag("settings[ratio_very_bad]", @settings["ratio_very_bad"] || defaults["ratio_very_bad"]) %>
+  <%= label_tag 'settings[color_bad]', l(:label_setting_color_bad) %>
+  <%= text_field_tag('settings[color_bad]', @settings["color_bad"] || defaults["color_bad"]) %>
 </p>
 
 <p>
-  <label><%= l(:label_setting_color_very_bad) %>:</label>
-  <%= text_field_tag("settings[color_very_bad]", @settings["color_very_bad"] || defaults["color_very_bad"]) %>
+  <%= label_tag 'settings[ratio_very_bad]', l(:label_setting_ratio_very_bad) %>
+  <%= text_field_tag('settings[ratio_very_bad]', @settings["ratio_very_bad"] || defaults["ratio_very_bad"]) %>
+</p>
+
+<p>
+  <%= label_tag 'settings[color_very_bad]', l(:label_setting_color_very_bad) %>
+  <%= text_field_tag('settings[color_very_bad]', @settings["color_very_bad"] || defaults["color_very_bad"]) %>
 </p>

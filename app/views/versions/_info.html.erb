@@ -44,28 +44,13 @@
             <td width="340px" class="total-hours"><%= "#{due}" %></td>
           </tr>
         <%- end -%>
-        <%- if !(custom_field = CustomField.find_by_id(Setting.plugin_advanced_roadmap_v2["parallel_effort_custom_field"].to_i)).nil? and
-               custom_field.field_format == "float" and version_parallel_rest_hours != version_rest_hours -%>
-          <tr>
-            <td width="310px" align="right"><%= l(:label_roadmap_due_in, "") %> (<%= custom_field.name %>)</td>
-            <%- due = l_hours(version_parallel_rest_hours) %>
-            <%- due = l_days(version_parallel_rest_hours / 8.0) if (version_parallel_rest_hours / 8.0) > 1.5 %>
-            <%- due = l_weeks(version_parallel_rest_hours / 40.0) if (version_parallel_rest_hours / 40.0) > 1.5 %>
-            <td width="340px" class="total-hours"><%= "#{due}" %></td>
-          </tr>
-          <%- if version_parallel_speed_rest_hours != version_parallel_rest_hours -%>
-            <tr>
-              <td width="310px" align="right"><%= l(:label_roadmap_due_in, "") %> (<%= custom_field.name %> + <%= l(:label_estimated_speed) %>)</td>
-              <td width="340px" class="total-hours"><%= "#{l_hours(version_parallel_speed_rest_hours)} / #{l_days(version_parallel_speed_rest_hours / 8.0)} / #{l_weeks(version_parallel_speed_rest_hours / 40.0)}" %></td>
-            </tr>
-          <%- end -%>
-        <%- end -%>
       <%- end -%>
     <%- end -%>
   </table>
 <%- end -%>
 
 <%- if issues.present? -%>
+<%- show_due_time = (Setting.plugin_advanced_roadmap_v2["show_due_time"]) -%>
 <fieldset class="related-issues"><legend><%= l(:label_related_issues) %></legend>
 <%= form_tag({}) do %>
 <table class="list related-issues">
@@ -94,7 +79,9 @@
     <th width="9%" align="center"><%= l(:field_done_ratio) %></th>
     <%- if User.current.allowed_to?(:view_time_entries, @project) and
            User.current.allowed_to?(:view_issue_estimated_hours, @project) -%>
-      <th width="9%" align="center"><%= l(:label_roadmap_due_in, "") %></th>
+      <th width="9%" align="center">
+         <%= ( show_due_time ? l(:label_roadmap_due_in, "") : l(:field_due_date) ) %>  
+      </th>
       <%- if !version_estimated_speed.nil? -%>
         <th width="9%" align="center"><%= l(:label_roadmap_due_in, "") %><br />(<%= l(:label_estimated_speed) %>)</th>
       <%- end -%>
@@ -153,7 +140,13 @@
       <td align="center"><font color="<%= color %>"><%= begin_strike %><%= (("%.0f" % issue_done_ratio) + "%") %><%= end_strike %></font></td>
       <%- if User.current.allowed_to?(:view_time_entries, @project) and
              User.current.allowed_to?(:view_issue_estimated_hours, @project) -%>
-        <td align="center"><font color="<%= color %>"><%= begin_strike %><%= ("%.2f" % issue_rest_hours) if issue_estimated_hours or issue_spent_hours %><%= end_strike %></font></td>
+        <td align="center"><font color="<%= color %>">
+          <%- if show_due_time -%>
+            <%= begin_strike %><%= ("%.2f" % issue_rest_hours) if issue_estimated_hours or issue_spent_hours %><%= end_strike %>
+          <%- else -%>
+            <%= format_date(issue.due_date) %>
+          <%- end -%>
+        </font></td>
         <%- if !version_estimated_speed.nil? -%>
           <td align="center"><font color="<%= color %>"><%= begin_strike %><%= ("%.2f" % (issue_rest_hours * ((!issue.closed? and (!issue_spent_hours or issue_spent_hours <= 0.0) and !version_estimated_speed.nil?) ? version_estimated_speed : 1.0))) if issue_estimated_hours or issue_spent_hours %><%= end_strike %></font></td>
         <%- end -%>
@@ -173,7 +166,13 @@
     <th align="center"><%= ("%.0f" % version.completed_percent) %>%</th>
     <%- if User.current.allowed_to?(:view_time_entries, @project) and
            User.current.allowed_to?(:view_issue_estimated_hours, @project) -%>
-      <th align="center"><%= ("%.2f" % version_rest_hours) %></th>
+      <th align="center">
+       <%- if show_due_time -%>
+         <%= ("%.2f" % version_rest_hours) %>
+       <%- else -%>
+         <%= format_date(version.due_date) %>
+       <%- end -%>
+      </th>
       <%- if !version_estimated_speed.nil? -%>
         <th align="center"><%= ("%.2f" % version_speed_rest_hours) %></th>
       <%- end -%>

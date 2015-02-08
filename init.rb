@@ -29,7 +29,7 @@ Redmine::Plugin.register :advanced_roadmap_v2 do
   author "Michel LOISELEUR"
   author_url "https://github.com/Coren"
   description "This is a plugin for Redmine that is used to show more information inside the Roadmap page and implements the milestones featuring."
-  version "2.1.1"
+  version "2.2.0"
   permission :manage_milestones, {:milestones => [:new, :create, :edit, :update, :destroy]}
   requires_redmine :version_or_higher => "2.1.2"
 
@@ -37,7 +37,7 @@ Redmine::Plugin.register :advanced_roadmap_v2 do
     permission :view_issue_estimated_hours, {}
   end
 
-  settings :default => {"parallel_effort_custom_field" => "",
+  settings :default => {"show_due_time" => "false",
                         "solved_issues_to_estimate" => "5",
                         "ratio_good" => "0.8",
                         "color_good" => "green",
