@@ -30,7 +30,7 @@ Steps:
 
 1.  Download last version and cd to Redmine root folder 
 2.  Create destination directory `mkdir plugins/advanced_roadmap_v2`
-3.  Unicompress in this folder `tar xvzf /path/to/advanced_roadmap_vx.y.z.tar.gz -C plugins/advanced_roadmap_v2`
+3.  Uncompress in this folder `tar xvzf /path/to/advanced_roadmap_vx.y.z.tar.gz -C plugins/advanced_roadmap_v2`
 4.  Into the Redmine root folder migrate plugins: `rake redmine:plugins:migrate`
 5.  Option: Install optional dependency: `apt-get install ruby-rmagick`
 6.  Restart your Redmine.
