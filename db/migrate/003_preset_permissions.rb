@@ -3,8 +3,7 @@ class PresetPermissions < ActiveRecord::Migration
     role = nil
     begin
       role = Role.find(:first, :conditions => "name='Manager'")
-    rescue Exception => e
-    end
+    rescue; end
     return true unless role
     role.permissions << :manage_milestones
     role.permissions << :view_issue_estimated_hours
@@ -12,7 +11,10 @@ class PresetPermissions < ActiveRecord::Migration
   end
 
   def self.down
-    role = Role.find(:first, :conditions => "name='Manager'")
+    role = nil
+    begin
+      role = Role.find(:first, :conditions => "name='Manager'")
+    rescue; end
     return true unless role
     role.permissions.delete :manage_milestones
     role.permissions.delete :view_issue_estimated_hours
