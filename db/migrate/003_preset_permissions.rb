@@ -1,6 +1,10 @@
 class PresetPermissions < ActiveRecord::Migration
   def self.up
-    role = Role.find(:first, :conditions => "name='Manager'")
+    role = nil
+    begin
+      role = Role.find(:first, :conditions => "name='Manager'")
+    rescue Exception => e
+    end
     return true unless role
     role.permissions << :manage_milestones
     role.permissions << :view_issue_estimated_hours
