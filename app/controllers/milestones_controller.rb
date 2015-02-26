@@ -29,7 +29,7 @@ class MilestonesController < ApplicationController
   end
 
   def new
-    @projects = Project.find(:all).sort { |a, b| a.name.downcase <=> b.name.downcase }
+    @projects = Project.order(:name).all
     @versions = @project.versions
     @milestone = Milestone.new
   rescue ActiveRecord::RecordNotFound

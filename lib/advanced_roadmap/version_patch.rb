@@ -102,10 +102,10 @@ module AdvancedRoadmap
           issues = []
           conditions = {:parent_id => options[:parent]}
           conditions[:tracker_id] = options[:trackers] if options[:trackers]
-          fixed_issues.visible.find(:all,
-                                    :conditions => conditions,
-                                    :include => [:status, :tracker, :priority],
-                                    :order => "#{Tracker.table_name}.position, #{Issue.table_name}.subject").each do |issue|
+          fixed_issues.visible.where(conditions)\
+                      .joins([:status, :tracker, :priority])\
+                      .order("#{Tracker.table_name}.position, #{Issue.table_name}.subject")\
+                      .find_each do |issue|
             issues << issue
             issues += sorted_fixed_issues(options.merge(:parent => issue))
           end

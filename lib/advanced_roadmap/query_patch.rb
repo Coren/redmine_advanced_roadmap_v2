@@ -7,11 +7,9 @@ module AdvancedRoadmap
         # Returns the milestones
         # Valid options are :conditions
         def milestones(options = {})
-          Milestone.scoped(:conditions => options[:conditions]).find :all,
-            :include => :project,
-            :conditions => project_statement
+          Milestone.where(options[:conditions]).where(project_statement).joins(:project).all
         rescue ::ActiveRecord::StatementInvalid => e
-          raise StatementInvalid.new(e.message)
+          raise ::ActiveRecord::StatementInvalid.new(e.message)
         end
       end
     end
