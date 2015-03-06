@@ -20,7 +20,7 @@ module AdvancedRoadmap
             milestones << {:name => milestone.name,
                            :url => url_for(:controller => :milestones,
                                            :action => :show,
-                                           :id => milestone.id),
+                                           :id => milestone.id, :only_path => true),
                            :day => milestone.effective_date.day}
           end
           response.body += view.render(:partial => "hooks/calendars/milestones",
