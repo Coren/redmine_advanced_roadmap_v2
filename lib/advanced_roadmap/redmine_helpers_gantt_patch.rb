@@ -10,11 +10,9 @@ module AdvancedRoadmap
             subject_for_milestones_label(options)
             options[:top] += options[:top_increment]
             @number_of_rows += 1
-            return if abort?
             options[:indent] += options[:indent_increment]
             project.milestones.sort.each do |milestone|
               render_milestone(project, milestone, options)
-              return if abort?
             end
             options[:indent] -= options[:indent_increment]
           end
@@ -70,11 +68,23 @@ module AdvancedRoadmap
             label = "#{h(milestone)}"
             case options[:format]
             when :html
-              html_task(options, coords, :css => "version task", :label => label, :markers => true)
+              if Redmine::VERSION::MAJOR == 2
+                html_task(options, coords, :css => "version task", :label => label, :markers => true)
+              else
+                html_task(options, coords, true, label, Version)
+              end
             when :image
-              image_task(options, coords, :label => label, :markers => true, :height => 3)
+              if Redmine::VERSION::MAJOR == 2
+                image_task(options, coords, :label => label, :markers => true, :height => 3)
+              else
+                image_task(options, coords, true, label, Version)
+              end
             when :pdf
-              pdf_task(options, coords, :label => label, :markers => true, :height => 0.8)
+              if Redmine::VERSION::MAJOR == 2
+                pdf_task(options, coords, :label => label, :markers => true, :height => 0.8)
+              else
+                pdf_task(options, coords, true, label, Version)
+              end
             end
           else
             ActiveRecord::Base.logger.debug "Gantt#line_for_milestone was not given a milestone with an effective_date"
