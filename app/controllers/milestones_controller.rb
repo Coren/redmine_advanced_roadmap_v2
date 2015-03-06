@@ -56,12 +56,12 @@ class MilestonesController < ApplicationController
   end
 
   def edit
-    @projects = Project.find(:all).sort { |a, b| a.name.downcase <=> b.name.downcase }
+    @projects = Project.order(:name).all
     @versions = @project.versions
   end
 
   def update
-    @projects = Project.find(:all).sort { |a, b| a.name.downcase <=> b.name.downcase }
+    @projects = Project.order(:name).all
     @versions = @project.versions
     versions_to_delete = @milestone.versions
     versions_to_add = []
@@ -77,7 +77,7 @@ class MilestonesController < ApplicationController
     end
     if @milestone.update_attributes(params[:milestone])
       versions_to_delete.each do |version|
-        milestone_version = MilestoneVersion.find(:first, :conditions => "milestone_id = #{@milestone.id} AND version_id = #{version.id}")
+        milestone_version = MilestoneVersion.where("milestone_id = #{@milestone.id} AND version_id = #{version.id}").first
         milestone_version.destroy
       end
       versions_to_add.each do |version|
