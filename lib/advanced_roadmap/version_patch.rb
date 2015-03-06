@@ -131,7 +131,23 @@ module AdvancedRoadmap
         end
   
         def self.sort_versions(versions)
-          versions.order([:effective_date, :rest_hours, :name])
+          if versions.is_a? Array
+            versions.sort!{|a, b|
+              if !a.effective_date.nil? and !b.effective_date.nil?
+                a.effective_date <=> b.effective_date
+              elsif a.effective_date.nil? and !b.effective_date.nil?
+                1
+              elsif !a.effective_date.nil? and b.effective_date.nil?
+                -1
+              elsif a.rest_hours != b.rest_hours
+                a.rest_hours <=> b.rest_hours
+              else
+                a.name.downcase <=> b.name.downcase
+              end
+            }
+          else
+            versions.order([:effective_date, :rest_hours, :name])
+          end
         end
         
         def self.calculate_totals(versions)
