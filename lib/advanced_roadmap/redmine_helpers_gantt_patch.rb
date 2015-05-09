@@ -6,7 +6,7 @@ module AdvancedRoadmap
       base.class_eval do
 
         def render_version_with_milestones(project, version, options = {})
-          if @last_rendered_project.nil? and project.milestones.any?
+          if @last_rendered_project != project and project.milestones.any?
             subject_for_milestones_label(options)
             options[:top] += options[:top_increment]
             @number_of_rows += 1
