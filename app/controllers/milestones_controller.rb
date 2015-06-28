@@ -29,7 +29,7 @@ class MilestonesController < ApplicationController
   end
 
   def new
-    @projects = Project.order(:name).all
+    @projects = Project.visible.order(:name).active
     @versions = @project.versions
     @milestone = Milestone.new
   rescue ActiveRecord::RecordNotFound
