@@ -69,7 +69,10 @@
             end
           end
         end -%>
-    <th width="14%" align="left"><%= l(:field_category) %></th>
+    <% nb_of_issues_with_category = issues.count{|i| !i.category.blank? } %>
+    <% if nb_of_issues_with_category > 0 %>
+      <th width="14%" align="left"><%= l(:field_category) %></th>
+    <% end %>
     <th width="#{width}%" align="left"><%= l(:field_issue) %></th>
     <%- if User.current.allowed_to?(:view_issue_estimated_hours, @project) -%>
       <th width="9%" align="center"><%= l(:field_estimated_hours) %></th>
@@ -109,7 +112,9 @@
         end -%>
     <tr class="hascontextmenu <%= cycle("odd", "even") %>">
       <%- tab = ("&nbsp;" * 3 * issue.parents_count).html_safe -%>
-      <td style="text-align: left;"><%= issue.category %></td>
+      <% if nb_of_issues_with_category > 0 %>
+        <td style="text-align: left;"><%= issue.category %></td>
+      <% end %>
       <td class="checkbox" align="left"><%= check_box_tag("ids[]", issue.id) %></td>
       <td align="left" style="text-align: left;">
         <div class="advanced-roadmap tooltip">
@@ -159,7 +164,9 @@
   <thead>
    <tr class="related-issues-footer">
     <th align="left"><%= l(:label_total) %></th>
-    <th></th>
+    <%- if nb_of_issues_with_category > 0 %>
+      <th></th>
+    <%- end %>
     <%- if User.current.allowed_to?(:view_issue_estimated_hours, @project) -%>
       <th align="center"><%= ("%.2f" % version.estimated_hours) %></th>
     <%- end -%>
