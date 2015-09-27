@@ -9,7 +9,11 @@
 }
 
 div.advanced-roadmap.tooltip {
-    opacity: 1;
-    position: relative;
-    z-index: auto;
+	opacity: 1;
+	position: relative;
+	z-index: auto;
+}
+
+div.advanced-roadmap.tooltip span.tip {
+	z-index: 20;
 }
