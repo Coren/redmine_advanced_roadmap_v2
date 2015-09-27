@@ -55,6 +55,7 @@
 <%= form_tag({}) do %>
 <table class="list related-issues">
   <thead>
+   <tr class="related-issues-header">
     <%- width = 73
         if User.current.allowed_to?(:view_issue_estimated_hours, @project)
           width -= 9 # estimated hours
@@ -86,6 +87,7 @@
         <th width="9%" align="center"><%= l(:label_roadmap_due_in, "") %><br />(<%= l(:label_estimated_speed) %>)</th>
       <%- end -%>
     <%- end -%>
+   </tr>
   </thead>
   <tbody>
   <%- issues.each do |issue| -%>
@@ -110,7 +112,7 @@
       <td style="text-align: left;"><%= issue.category %></td>
       <td class="checkbox" align="left"><%= check_box_tag("ids[]", issue.id) %></td>
       <td align="left" style="text-align: left;">
-        <div class="tooltip">
+        <div class="advanced-roadmap tooltip">
           <%= tab %>
           <font color="<%= color %>"><%= begin_strike %>
             <%= link_to_issue(issue, :project => (@project != issue.project)) %>
@@ -155,6 +157,7 @@
   <%- end -%>
   </tbody>
   <thead>
+   <tr class="related-issues-footer">
     <th align="left"><%= l(:label_total) %></th>
     <th></th>
     <%- if User.current.allowed_to?(:view_issue_estimated_hours, @project) -%>
@@ -177,6 +180,7 @@
         <th align="center"><%= ("%.2f" % version_speed_rest_hours) %></th>
       <%- end -%>
     <%- end -%>
+   </tr>
   </thead>
 </table>
 <% end %>

@@ -7,3 +7,9 @@
 {
 	background-image:		url(../images/milestones.png);
 }
+
+div.advanced-roadmap.tooltip {
+    opacity: 1;
+    position: relative;
+    z-index: auto;
+}
