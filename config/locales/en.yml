@@ -16,6 +16,7 @@ en:
   label_setting_ratio_good: "Good speed ratio"
   label_setting_ratio_very_bad: "Very bad speed ratio"
   label_setting_solved_issues_to_estimate: "Solved issues to estimate"
+  label_hide_closed_issues: "Hide solved issues"
   notice_unable_delete_milestone: "Unable to delete milestone."
   permission_manage_milestones: "Manage milestones"
   permission_view_issue_estimated_hours: "View estimated hours"

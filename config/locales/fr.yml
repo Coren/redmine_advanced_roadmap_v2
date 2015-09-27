@@ -15,6 +15,7 @@ fr:
   label_setting_ratio_good: "Ratio de bonne vitesse de progression"
   label_setting_ratio_very_bad: "Ratio de très mauvaise vitesse de progression"
   label_setting_solved_issues_to_estimate: "Problèmes résolus à estimer"
+  label_hide_closed_issues: "Masquer les demandes résolues"
   notice_unable_delete_milestone: "Impossible de supprimer l'étape."
   permission_manage_milestones: "Gestion des étapes"
   permission_view_issue_estimated_hours: "Voir nombres d'heures estimées"

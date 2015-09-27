@@ -9,6 +9,11 @@ module AdvancedRoadmap
           index_without_plugin
           @totals = Version.calculate_totals(@versions)
           Version.sort_versions(@versions)
+
+          @issues_by_version.each do |versions|
+	    versions.last.delete_if { |issue | issue.closed? }
+          end if params[:only_open]
+
         end
         alias_method_chain :index, :plugin
   
