@@ -12,7 +12,7 @@ require "gravatar"
 ApplicationHelper.send(:include, AdvancedRoadmap::ApplicationHelperPatch)
 CalendarsController.send(:include, AdvancedRoadmap::CalendarsControllerPatch)
 Issue.send(:include, AdvancedRoadmap::IssuePatch)
-IssuesController.send(:include, AdvancedRoadmap::IssuesControllerPatch)
+Journal.send(:include, AdvancedRoadmap::JournalPatch)
 Project.send(:include, AdvancedRoadmap::ProjectPatch)
 ProjectsHelper.send(:include, AdvancedRoadmap::ProjectsHelperPatch)
 Query.send(:include, AdvancedRoadmap::QueryPatch)
