@@ -35,3 +35,12 @@ Steps:
 5.  Option: Install dependency required for pretty graph: `apt-get install ruby-rmagick`
 6.  Restart your Redmine.
 
+
+Uninstall
+=========
+
+Steps
+1. Into the Redmine root folder migrate plugins: `RAILS_ENV=production bundle exec rake redmine:plugins:migrate NAME=advanced_roadmap_v2 VERSION=0`
+2. Delete plugin directory: `rm -rf plugins/advanced_roadmap_v2`
+
+
