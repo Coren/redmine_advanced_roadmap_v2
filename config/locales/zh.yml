@@ -1,4 +1,4 @@
-en:
+zh:
   label_click_to_enlarge_reduce: "点击放大/缩小"
   label_estimated_speed: "估计速率"
   label_f_day: "%{value}天"
@@ -16,6 +16,7 @@ en:
   label_setting_ratio_good: "良好速率"
   label_setting_ratio_very_bad: "极差速率"
   label_setting_solved_issues_to_estimate: "解决问题预估"
+  label_hide_closed_issues: "隐藏已关闭的问题"
   notice_unable_delete_milestone: "无法删除里程碑"
   permission_manage_milestones: "里程碑管理"
   permission_view_issue_estimated_hours: "查看预估小时数"
