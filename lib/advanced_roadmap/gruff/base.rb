@@ -103,8 +103,7 @@ module AdvancedRoadmap
       # path to the TTF font file.  RMagick must be built with the Freetype
       # libraries for this to work properly.
       #
-      # Tries to find Bitstream Vera (Vera.ttf) in the location specified by
-      # ENV['MAGICK_FONT_PATH']. Uses default RMagick font otherwise.
+      # Uses default RMagick Redmine configured font (rmagick_font_path)
       #
       # The font= method below fulfills the role of the writer, so we only need
       # a reader here.
@@ -181,8 +180,7 @@ module AdvancedRoadmap
       #
       # Or, send a geometry string for other ratios ('800x400', '400x225').
       #
-      # Looks for Bitstream Vera as the default font. Expects an environment var
-      # of MAGICK_FONT_PATH to be set. (Uses RMagick's default font otherwise.)
+      # Looks for Redmine RMagick configured font as the default (rmagick_font_path)
       def initialize(target_width=DEFAULT_TARGET_WIDTH)
         if not Numeric === target_width
           geometric_width, geometric_height = target_width.split('x')
@@ -222,8 +220,7 @@ module AdvancedRoadmap
   
         @scale = @columns / @raw_columns
   
-        vera_font_path = File.expand_path('Vera.ttf', ENV['MAGICK_FONT_PATH'])
-        @font = File.exists?(vera_font_path) ? vera_font_path : nil
+        @font = Redmine::Configuration['rmagick_font_path'] || ""
   
         @marker_font_size = 21.0
         @legend_font_size = 20.0
