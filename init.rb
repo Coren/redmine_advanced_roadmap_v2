@@ -10,7 +10,7 @@ require "rubygems"
 require "gravatar"
 
 ApplicationHelper.send(:include, AdvancedRoadmap::ApplicationHelperPatch)
-CalendarsController.send(:include, AdvancedRoadmap::CalendarsControllerPatch)
+# CalendarsController.send(:include, AdvancedRoadmap::CalendarsControllerPatch)
 Issue.send(:include, AdvancedRoadmap::IssuePatch)
 Journal.send(:include, AdvancedRoadmap::JournalPatch)
 Project.send(:include, AdvancedRoadmap::ProjectPatch)
