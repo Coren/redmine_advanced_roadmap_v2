@@ -41,7 +41,8 @@ Steps:
 Uninstall
 =========
 
-Steps
+Steps: 
+
 1. Into the Redmine root folder migrate plugins: `RAILS_ENV=production bundle exec rake redmine:plugins:migrate NAME=advanced_roadmap_v2 VERSION=0`
 2. Delete plugin directory: `rm -rf plugins/advanced_roadmap_v2`
 
