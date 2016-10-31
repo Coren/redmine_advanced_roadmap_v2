@@ -3,7 +3,7 @@ Redmine Plugin: Advanced Roadmap v2
 
 This plugin was a fork of Redmine Plugin: [advanced roadmap](https://redmine.ociotec.com/projects/advanced-roadmap), when it was not developed.
 
-Since original plugin is back on rails, this plugin won't be maintained anymore.
+Since original plugin is back on rails, this plugin **won't be maintained anymore.**
 
 ScreenShot
 ==========
