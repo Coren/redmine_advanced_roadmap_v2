@@ -1,0 +1,22 @@
+# Turkish strings go here for Rails i18n by atopcu
+tr:^M
+  label_click_to_enlarge_reduce: "Tıklayarak genişlet/daralt"^M
+  label_estimated_speed: "Tahim edilen hız"^M
+  label_f_day: "%{value} gün"^M
+  label_f_day_plural: "%{value} gün"^M
+  label_f_week: "%{value} hafta"^M
+  label_f_week_plural: "%{value} hafta"^M
+  label_milestone: "Kilometre taşı"^M
+  label_milestone_new: "Yeni kilometre taşı"^M
+  label_milestone_plural: "Kilometre taşları"^M
+  label_setting_show_due_time: "Bitiş tarihi yerine kalan süreyi göster"^M
+  label_setting_color_bad: "Kötü hız oranı rengi"^M
+  label_setting_color_good: "İyi hız oranı rengi"^M
+  label_setting_color_very_bad: "Berbat hız oranı rengi"^M
+  label_setting_ratio_bad: "Kötü hız oranı"^M
+  label_setting_ratio_good: "İyi hız oranı"^M
+  label_setting_ratio_very_bad: "Berbat hız oranı"^M
+  label_setting_solved_issues_to_estimate: "Tahmini biten işler"^M
+  notice_unable_delete_milestone: "Kilometre taşı silinemiyor."^M
+  permission_manage_milestones: "Kilometre taşları yönetimi"^M
+  permission_view_issue_estimated_hours: "Tahmini kalan saatleri göster"^M
