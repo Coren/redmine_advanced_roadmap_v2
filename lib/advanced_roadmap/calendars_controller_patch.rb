@@ -14,7 +14,7 @@ module AdvancedRoadmap
             include ApplicationHelper
           end
           milestones = []
-          @query.milestones(:conditions => ["effective_date BETWEEN ? AND ?",
+          @query.becomes(Query).milestones(:conditions => ["effective_date BETWEEN ? AND ?",
                                             @calendar.startdt,
                                             @calendar.enddt]).each do |milestone|
             milestones << {:name => milestone.name,
