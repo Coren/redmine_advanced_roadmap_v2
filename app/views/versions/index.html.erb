@@ -7,8 +7,14 @@
 <%= render(:partial => "versions/total", :locals => {:project => @project, :totals => @totals, :versions => @versions}) %>
 <% @versions.each do |version| %>
     <h3 class="version"><%= tag 'a', :name => version.name %><%= link_to_version version %></h3>
-    <%= render :partial => 'versions/info', :locals => {:version => version, :issues => @issues_by_version[version], :totals => @totals} %>
+    <%- if Redmine::VERSION::STRING < '3.4.0' -%>
     <%= call_hook :view_projects_roadmap_version_bottom, :version => version %>
+    <%- else -%>
+    <%= form_tag({}, :data => {:cm_url => issues_context_menu_path}) do -%>
+      <%= render :partial => 'versions/info', :locals => {:version => version, :issues => version.sorted_fixed_issues(:trackers => @selected_tracker_ids), :totals => @totals} %>
+    <% end %>
+  <%- end -%>
+  <%= call_hook :view_projects_roadmap_version_bottom, :version => version %>
 <% end %>
 </div>
 <% end %>
@@ -42,4 +48,8 @@
 
 <% html_title(l(:label_roadmap)) %>
 
-<%= context_menu issues_context_menu_path %>
+<%- if Redmine::VERSION::STRING < '3.4.0' -%>
+  <%= context_menu issues_context_menu_path %>
+<%- else -%>
+  <%= context_menu %>
+<%- end -%>
