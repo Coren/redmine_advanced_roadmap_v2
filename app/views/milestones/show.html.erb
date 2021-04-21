@@ -49,4 +49,8 @@
 
 <% html_title(l(:label_roadmap)) %>
 
-<%= context_menu issues_context_menu_path %>
+<%- if Redmine::VERSION::STRING < '3.4.0' -%>
+  <%= context_menu issues_context_menu_path %>
+<%- else -%>
+  <%= context_menu %>
+<%- end -%>
