@@ -1,4 +1,4 @@
-class CreateMilestones < ActiveRecord::Migration
+class CreateMilestones < ActiveRecord::Migration[5.1]
   def self.up
     create_table :milestones, :force => true do |t|
       t.column :name,             :string,                            :null => false

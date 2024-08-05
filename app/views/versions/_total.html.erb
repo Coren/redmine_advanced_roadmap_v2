@@ -1,6 +1,7 @@
 <%= tag "a", :name => l(:label_total) %>
 <h3 class="icon22 icon22-package"><%= l(:label_total) %></h3>
-<%= progress_bar([totals[:closed_percent], totals[:completed_percent]], :width => '40em', :legend => ('%0.0f%' % totals[:completed_percent])) %>
+<%= progress_bar([totals[:closed_percent], totals[:completed_percent]], :width => '80px', :legend => ('%0.0f%%' % totals[:completed_percent])) %>
+<br>
 <fieldset><legend><%= l(:label_time_tracking) %></legend>
   <table width="100%">
     <tr>
@@ -47,3 +48,4 @@
     </tr>
   </table>
 </fieldset>
+<br>

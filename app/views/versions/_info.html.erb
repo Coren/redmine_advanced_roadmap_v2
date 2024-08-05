@@ -50,7 +50,7 @@
 <%- end -%>
 
 <%- if issues.present? -%>
-<%- show_due_time = (Setting.plugin_advanced_roadmap_v2["show_due_time"]) -%>
+<%- show_due_time = (Setting.plugin_redmine_advanced_roadmap_v2["show_due_time"]) -%>
 <fieldset class="related-issues"><legend><%= l(:label_related_issues) %></legend>
 <%= form_tag({}) do %>
 <table class="list related-issues">

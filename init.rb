@@ -5,31 +5,25 @@ if (Rails.env == "development")
   ActiveSupport::Dependencies.autoload_once_paths.reject!{|x| x =~ /^#{Regexp.escape(File.dirname(__FILE__))}/}
 end
 
-require "redmine"
-require "rubygems"
-require "gravatar"
+ApplicationHelper.send(:include, RedmineAdvancedRoadmap::ApplicationHelperPatch)
+CalendarsController.send(:include, RedmineAdvancedRoadmap::CalendarsControllerPatch)
+Issue.send(:include, RedmineAdvancedRoadmap::IssuePatch)
+Journal.send(:include, RedmineAdvancedRoadmap::JournalPatch)
+Project.send(:include, RedmineAdvancedRoadmap::ProjectPatch)
+ProjectsHelper.send(:include, RedmineAdvancedRoadmap::ProjectsHelperPatch)
+Query.send(:include, RedmineAdvancedRoadmap::QueryPatch)
+Redmine::Helpers::Gantt.send(:include, RedmineAdvancedRoadmap::RedmineHelpersGanttPatch)
+Redmine::I18n.send(:include, RedmineAdvancedRoadmap::RedmineI18nPatch)
+Version.send(:include, RedmineAdvancedRoadmap::VersionPatch)
+VersionsController.send(:include, RedmineAdvancedRoadmap::VersionsControllerPatch)
 
-ApplicationHelper.send(:include, AdvancedRoadmap::ApplicationHelperPatch)
-CalendarsController.send(:include, AdvancedRoadmap::CalendarsControllerPatch)
-Issue.send(:include, AdvancedRoadmap::IssuePatch)
-Journal.send(:include, AdvancedRoadmap::JournalPatch)
-Project.send(:include, AdvancedRoadmap::ProjectPatch)
-ProjectsHelper.send(:include, AdvancedRoadmap::ProjectsHelperPatch)
-Query.send(:include, AdvancedRoadmap::QueryPatch)
-Redmine::Helpers::Gantt.send(:include, AdvancedRoadmap::RedmineHelpersGanttPatch)
-Redmine::I18n.send(:include, AdvancedRoadmap::RedmineI18nPatch)
-Version.send(:include, AdvancedRoadmap::VersionPatch)
-VersionsController.send(:include, AdvancedRoadmap::VersionsControllerPatch)
-
-require_dependency "advanced_roadmap/view_hooks"
-
-Redmine::Plugin.register :advanced_roadmap_v2 do
+Redmine::Plugin.register :redmine_advanced_roadmap_v2 do
   name "Advanced roadmap & milestones plugin"
   url "https://github.com/ekylibre/redmine_advanced_roadmap_v2"
   author "Michel LOISELEUR"
   author_url "https://github.com/Coren"
   description "This is a plugin for Redmine that is used to show more information inside the Roadmap page and implements the milestones featuring."
-  version "2.4.3"
+  version "2.5.0"
   permission :manage_milestones, {:milestones => [:new, :create, :edit, :update, :destroy]}
   requires_redmine :version_or_higher => "2.1.2"
 

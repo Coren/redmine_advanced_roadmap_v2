@@ -1,4 +1,4 @@
-class PresetPermissions < ActiveRecord::Migration
+class PresetPermissions < ActiveRecord::Migration[5.1]
   def self.up
     role = nil
     begin

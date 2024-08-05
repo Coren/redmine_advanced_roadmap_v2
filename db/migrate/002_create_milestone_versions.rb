@@ -1,4 +1,4 @@
-class CreateMilestoneVersions < ActiveRecord::Migration
+class CreateMilestoneVersions < ActiveRecord::Migration[5.1]
   def self.up
     create_table :milestone_versions, :force => true do |t|
       t.column :milestone_id,     :integer,                           :null => false
